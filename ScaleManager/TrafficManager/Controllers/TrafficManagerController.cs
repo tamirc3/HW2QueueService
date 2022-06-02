@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using Newtonsoft.Json;
 
 namespace TrafficManager.Controllers
@@ -8,88 +9,66 @@ namespace TrafficManager.Controllers
     [Route("[controller]")]
     public class TrafficManagerController : ControllerBase
     {
+        private readonly ILoadBalancerClass _loadBalancer;
+
+        public TrafficManagerController(ILoadBalancerClass loadBalancer)
+        {
+            _loadBalancer = loadBalancer;
+        }
 
         [HttpPut]
         [Route("/enqueue")]
-        public ContentResult TrafficManagerToEnqueue(int iterations, [FromBody] string dataToDigest)
+        public async Task<ContentResult> TrafficManagerToEnqueue(int iterations, [FromBody] string dataToDigest)
         {
             //Object validation
             if (iterations <= 0 || dataToDigest is null || dataToDigest.Length == 0)
             {
-                return new ContentResult() {Content = ErrorConstants.InvalidRequestEnqueue, StatusCode = 400};
+                return new ContentResult() { Content = ErrorConstants.InvalidRequestEnqueue, StatusCode = 400 };
             }
 
             var client = new HttpClient();
-            var LoadBalancer = new LoadBalancerClass();
+            
 
-            var dataJson = JsonConvert.SerializeObject(dataToDigest);
-            string url = LoadBalancer.LoadMachineUrl();
-            var response = client.PostAsync(string.Format(url, "/Enqueue?iterations=", iterations),
-                new StringContent(dataJson, Encoding.UTF8, "application/json"));
+            string host = _loadBalancer.GetNodeUrl();
+            var requestUri = host + QueueUrlConsts.QueueServiceApi_enqueue;
 
+            HashRequest hashRequest = new HashRequest()
+            {
+                Buffer = dataToDigest,
+                Iterations = iterations
+            };
+            var dataJson = JsonConvert.SerializeObject(hashRequest);
+            var response = await client.PostAsync(requestUri,
+                    new StringContent(dataJson, Encoding.UTF8, "application/json"));
 
-            var workId = response.Result.ToString();
+            var workId = await response.Content.ReadAsStringAsync();
 
-            return new ContentResult() {Content = workId, StatusCode = (int?) response.Result.StatusCode};
+            return new ContentResult() { Content = workId, StatusCode = (int?)response.StatusCode };
         }
 
         [HttpPost]
         [Route("/pullCompleted")]
-        public ContentResult TrafficManagerToDequeue(int top)
+        public async Task<ContentResult> TrafficManagerToDequeue(int top)
         {
             //Object validation
             if (top <= 0)
             {
-                return new ContentResult() {Content = ErrorConstants.InvalidRequestDequeue, StatusCode = 400};
+                return new ContentResult() { Content = ErrorConstants.InvalidRequestDequeue, StatusCode = 400 };
             }
 
-            var LoadBalancer = new LoadBalancerClass();
-            string url = LoadBalancer.LoadMachineUrl();
+            string host = _loadBalancer.GetNodeUrl();
 
             var client = new HttpClient();
-            var response = client.GetAsync(string.Format(url, "/Dequeue?top=", top));
-
-            var preparedData = response.Result;
+            var url = host+QueueUrlConsts.QueueServiceApi_pullCompleted + "?top=" + top;
+            var response = await client.GetAsync(url);
+            var preparedData = await response.Content.ReadAsStringAsync();
+             preparedData = preparedData.Replace("-", string.Empty);
 
             return new ContentResult()
-                {Content = JsonConvert.SerializeObject(preparedData), StatusCode = (int?) preparedData.StatusCode};
+            { Content = JsonConvert.SerializeObject(preparedData), StatusCode = (int?)response.StatusCode };
 
         }
 
 
-    }
-    public class ErrorConstants
-    {
-        public const string InvalidRequestDequeue = "top has to be atleast one";
-        public const string InvalidRequestEnqueue = "Invalid Input , number of iterations has to be atleast one and request body has to be a string";
-    }
-    public class LoadBalancerClass
-    {
-        public LoadBalancerClass()
-        {
-
-        }
-        public string LoadMachineUrl()
-        {
-            string randomUrl;
-            Random rand = new Random();
-
-            if (rand.Next(0, 2) == 0)
-            {
-                randomUrl = WebappConstants.FirstMachine;
-            }
-            else
-            {
-                randomUrl = WebappConstants.SecondMachine;
-            }
-
-            return randomUrl;
-        }
-    }
-
-    public class WebappConstants
-    {
-        public const string FirstMachine = "ww.dfdf.com";
-        public const string SecondMachine = "ww.dfdf.com";
     }
 }

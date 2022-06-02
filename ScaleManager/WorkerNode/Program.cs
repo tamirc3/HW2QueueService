@@ -5,15 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 string requestQueueUrl_dequeue;
 string completedQueueUrl_enqueue;
-if (QueueUrlConsts.ShouldTakeValuesFromConfig)
+if (!string.IsNullOrEmpty(builder.Configuration["QueueHost"]))
 {
     requestQueueUrl_dequeue = builder.Configuration["QueueHost"] + QueueUrlConsts.requestsQueue_dequeue_url;
     completedQueueUrl_enqueue = builder.Configuration["QueueHost"] + QueueUrlConsts.completedQueue_enqueue_url;
 }
 else
 {
-    requestQueueUrl_dequeue = QueueUrlConsts.QueueHost + QueueUrlConsts.requestsQueue_dequeue_url;
-    completedQueueUrl_enqueue = QueueUrlConsts.QueueHost + QueueUrlConsts.completedQueue_enqueue_url;
+    requestQueueUrl_dequeue = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.requestsQueue_dequeue_url;
+    completedQueueUrl_enqueue = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.completedQueue_enqueue_url;
 }
 
 
@@ -28,13 +28,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 
