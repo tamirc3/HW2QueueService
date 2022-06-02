@@ -5423,11 +5423,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\TrafficManager\\TrafficManager.csproj",
+      "projectUniqueName": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\TrafficManager\\TrafficManager.csproj",
       "projectName": "TrafficManager",
-      "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\TrafficManager\\TrafficManager.csproj",
+      "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\TrafficManager\\TrafficManager.csproj",
       "packagesPath": "C:\\Users\\tacaspi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\TrafficManager\\obj\\",
+      "outputPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\TrafficManager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tacaspi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5444,8 +5444,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Model\\Model.csproj"
+            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj": {
+              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj"
             }
           }
         }

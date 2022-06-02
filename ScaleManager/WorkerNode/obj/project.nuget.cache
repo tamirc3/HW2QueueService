@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KEFASMss30dUuSJ0oX8VanCWmSL6coMuhHwU5x/MTLZHkTeiYm2jdACEaDyz5PZTId991ynzUhBnXAkof2YPUw==",
+  "dgSpecHash": "VsMd+4XeUJTPZr5RbWqE9YWv5uxwpmNV9pYisTs99yA7w+tzDx8m8cbNOv6/5afvMAVjzZMdCPX+IQAdjiqfrQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\WorkerNode\\WorkerNode.csproj",
+  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\WorkerNode\\WorkerNode.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",

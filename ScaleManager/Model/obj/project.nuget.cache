@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VVpQ5QcRZzT7xmmcDu0085+GBxy/1TiJXqNUjIkI/ulec+o888ufpl0j/cdlFQBOj2++OM9m1uenEqJXorxztw==",
+  "dgSpecHash": "FJN1lUH6waM1YHkLv7GeqPNXDd+4s4DmGPkf2EHdudpdDSifyJEZWEWw8zhrTg09AR0saqWexK8uWpJDWI1oMA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Model\\Model.csproj",
+  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

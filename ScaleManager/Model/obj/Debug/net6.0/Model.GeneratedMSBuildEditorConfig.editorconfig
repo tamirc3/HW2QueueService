@@ -7,4 +7,4 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Model
-build_property.ProjectDir = C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\QueueSystem\ScaleManager\Model\
+build_property.ProjectDir = C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\Model\

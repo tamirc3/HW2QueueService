@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoScaleService", "ScaleManager\AutoScaleService.csproj", "{2B0AF1EE-718E-4952-83F0-0C07FF464998}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleManager", "ScaleManager\ScaleManager.csproj", "{2B0AF1EE-718E-4952-83F0-0C07FF464998}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{8361A111-11F8-4914-9670-AEF49C6980FB}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueApi", "QueueApi\QueueA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerNode", "WorkerNode\WorkerNode.csproj", "{BE393FA0-5C84-4144-999F-37EBBC71AD89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManager", "TrafficManager\TrafficManager.csproj", "{38C6D2C7-ED64-4668-AAB1-8DA11E0ACEF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrafficManager", "TrafficManager\TrafficManager.csproj", "{38C6D2C7-ED64-4668-AAB1-8DA11E0ACEF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

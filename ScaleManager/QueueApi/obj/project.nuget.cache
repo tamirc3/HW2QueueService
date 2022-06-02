@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tLpiD6vM+sfgcQAWVb57aHLJPLR6c0WGPygcvtMkyRXiPiQYQJuIAk6queBCcTrCBzmyy5JioxA7EgrtLcf7vg==",
+  "dgSpecHash": "xKVa4S1Cn5kN+9+KdoUzo7PRuT/GGKSbV51tdf8zKxSwC1MD3HsQhvbNnraKWm1j0gDvQxl3n0PqHuIsjUWyQQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\QueueApi\\QueueApi.csproj",
+  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\QueueApi\\QueueApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cADdF/wkLIKvQLkwVMgbvPHT8XKfpmSjtJGmUuPCNSNayjlzWaOd5836qjDe275zVdV8cIZspQVnU51h93VWmQ==",
+  "dgSpecHash": "ipGJjfIEUD6f7I/DptpeyGPATU2aFL8YGn7puxZ8xlXfbFHqukGV1qbmnW2TdxK1QadSN0pmPXTc0QkXpk3Phg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\ScaleManager\\AutoScaleService.csproj",
+  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.azure.keyvault\\3.0.5\\microsoft.azure.keyvault.3.0.5.nupkg.sha512",
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.azure.keyvault.webkey\\3.0.5\\microsoft.azure.keyvault.webkey.3.0.5.nupkg.sha512",

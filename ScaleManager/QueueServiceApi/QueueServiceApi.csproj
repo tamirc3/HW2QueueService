@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\ScaleManager\AutoScaleService.csproj" />
+    <ProjectReference Include="..\ScaleManager\ScaleManager.csproj" />
   </ItemGroup>
 
 </Project>

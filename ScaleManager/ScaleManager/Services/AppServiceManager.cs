@@ -3,6 +3,7 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Model;
 
 namespace AutoScaleService.Services;
 
@@ -72,8 +73,35 @@ public class AppServiceManager : IAppServiceManager
             .WithBranch("main")
             .Attach()
             .Create();
-            
+        
         appSerivcePool.Enqueue(app);
+    }
+
+    private async Task updateWorkerConfig(string queueHost)
+    {
+        var credentials = SdkContext.AzureCredentialsFactory
+            .FromServicePrincipal("",
+                "",
+                "",
+                AzureEnvironment.AzureGlobalCloud);
+
+        RestClient restClient = RestClient
+            .Configure()
+            .WithEnvironment(AzureEnvironment.AzureGlobalCloud)
+            .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+            .WithCredentials(credentials)
+            .Build();
+
+        var _websiteClient = new WebSiteManagementClient(restClient);
+
+        // get
+        var configs = await _websiteClient.WebApps.ListApplicationSettingsAsync("RG", "WEBAPP");
+
+        // add config
+        configs.Properties.Add("QueueHost", queueHost);
+
+        // update
+        var result = await _websiteClient.WebApps.UpdateApplicationSettingsAsync("RG", "WEBAPP", configs);
     }
 
     public void DeleteAppService()

@@ -2320,25 +2320,6 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
-      "AutoScaleService/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
-          "Microsoft.Azure.Management.Fluent": "1.38.1",
-          "Model": "1.0.0",
-          "Swashbuckle.AspNetCore": "6.2.3"
-        },
-        "compile": {
-          "bin/placeholder/AutoScaleService.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AutoScaleService.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
       "Model/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2348,6 +2329,25 @@
         "runtime": {
           "bin/placeholder/Model.dll": {}
         }
+      },
+      "ScaleManager/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
+          "Microsoft.Azure.Management.Fluent": "1.38.1",
+          "Model": "1.0.0",
+          "Swashbuckle.AspNetCore": "6.2.3"
+        },
+        "compile": {
+          "bin/placeholder/ScaleManager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ScaleManager.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -7334,21 +7334,21 @@
         "windowsazure.storage.nuspec"
       ]
     },
-    "AutoScaleService/1.0.0": {
-      "type": "project",
-      "path": "../ScaleManager/AutoScaleService.csproj",
-      "msbuildProject": "../ScaleManager/AutoScaleService.csproj"
-    },
     "Model/1.0.0": {
       "type": "project",
       "path": "../Model/Model.csproj",
       "msbuildProject": "../Model/Model.csproj"
+    },
+    "ScaleManager/1.0.0": {
+      "type": "project",
+      "path": "../ScaleManager/ScaleManager.csproj",
+      "msbuildProject": "../ScaleManager/ScaleManager.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "AutoScaleService >= 1.0.0",
       "Model >= 1.0.0",
+      "ScaleManager >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -7358,11 +7358,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\QueueServiceApi\\QueueServiceApi.csproj",
+      "projectUniqueName": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\QueueServiceApi\\QueueServiceApi.csproj",
       "projectName": "QueueServiceApi",
-      "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\QueueServiceApi\\QueueServiceApi.csproj",
+      "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\QueueServiceApi\\QueueServiceApi.csproj",
       "packagesPath": "C:\\Users\\tacaspi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\QueueServiceApi\\obj\\",
+      "outputPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\QueueServiceApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tacaspi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7379,11 +7379,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Model\\Model.csproj"
+            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj": {
+              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj"
             },
-            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\ScaleManager\\AutoScaleService.csproj": {
-              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\ScaleManager\\AutoScaleService.csproj"
+            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj": {
+              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj"
             }
           }
         }

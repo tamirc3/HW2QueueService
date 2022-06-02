@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9K2VrWwAfjqoevXBDw3vxmhe8fknsIlAtygAFj+bCFhGgqKe5AOaYsqmv1lYHd1UznILq2O74Dyi2NjUcmBvGw==",
+  "dgSpecHash": "2IDNHJTi4UFq1bNXTy5gC2wyT4aNA74Dz5gYMrw9YrAb/zB2vH2YHliEyuc2b0Q65+jKPIIkT63p7NH9ET7a0A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\Testing\\Testing.csproj",
+  "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Testing\\Testing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tacaspi\\.nuget\\packages\\bullseye\\4.0.0\\bullseye.4.0.0.nupkg.sha512",
     "C:\\Users\\tacaspi\\.nuget\\packages\\microsoft.azure.keyvault\\3.0.5\\microsoft.azure.keyvault.3.0.5.nupkg.sha512",
