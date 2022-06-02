@@ -5,7 +5,6 @@ using Model;
 namespace QueueServiceApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class QueueServiceApiController : ControllerBase
     {
 
@@ -19,7 +18,8 @@ namespace QueueServiceApi.Controllers
             _workerQueueService = workerQueueService;
         }
 
-        [HttpGet(Name = "pullCompleted")]
+        [HttpGet]
+        [Route("queueServiceApi/pullCompleted")]
         public async Task<ActionResult> Get(int numberOfCompletedRequests)
         {
 
@@ -45,14 +45,15 @@ namespace QueueServiceApi.Controllers
 
         }
 
-        [HttpPost(Name = "enqueue")]
+        [HttpPost]
+        [Route("queueServiceApi/enqueue")]
         public async Task<ActionResult> EnqueueWorkerMessage([FromBody] HashRequest hashRequest)
         {
             var queueResponse = await _workerQueueService.EnqueueMessageAsync(hashRequest);
 
             if (queueResponse.WorkerQueueResponse.IsSuccessStatusCode)
             {
-                return Ok($"enqueue request completed,taskID = {queueResponse.TaskID}");
+                return Ok($"{queueResponse.TaskID}");
             }
             else
             {

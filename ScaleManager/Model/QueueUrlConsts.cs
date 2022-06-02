@@ -18,6 +18,6 @@
         public const string completedQueue_dequeue_url = "/Queue/completedQueue/dequeue";
 
 
-        public const bool ShouldTakeValuesFromConfig = true;
+        public const bool ShouldTakeValuesFromConfig = false;
     }
 }

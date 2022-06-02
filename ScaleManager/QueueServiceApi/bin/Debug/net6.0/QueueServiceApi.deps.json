@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "QueueServiceApi/1.0.0": {
         "dependencies": {
-          "AutoScaleService": "1.0.0",
           "Model": "1.0.0",
+          "ScaleManager": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
@@ -1574,7 +1574,12 @@
           }
         }
       },
-      "AutoScaleService/1.0.0": {
+      "Model/1.0.0": {
+        "runtime": {
+          "Model.dll": {}
+        }
+      },
+      "ScaleManager/1.0.0": {
         "dependencies": {
           "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
           "Microsoft.Azure.Management.Fluent": "1.38.1",
@@ -1582,12 +1587,7 @@
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
-          "AutoScaleService.dll": {}
-        }
-      },
-      "Model/1.0.0": {
-        "runtime": {
-          "Model.dll": {}
+          "ScaleManager.dll": {}
         }
       }
     }
@@ -2543,12 +2543,12 @@
       "path": "windowsazure.storage/9.3.3",
       "hashPath": "windowsazure.storage.9.3.3.nupkg.sha512"
     },
-    "AutoScaleService/1.0.0": {
+    "Model/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Model/1.0.0": {
+    "ScaleManager/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

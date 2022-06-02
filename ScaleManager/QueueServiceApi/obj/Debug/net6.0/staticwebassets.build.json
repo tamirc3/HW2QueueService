@@ -1,15 +1,15 @@
 {
   "Version": 1,
-  "Hash": "RHIqKwb+YHgdTMpG4TfgJZTQ4n4OJ4oSJVHYLkO5hg0=",
+  "Hash": "NnMDUgf7+krE/JAqoNadEqY3RqIer8kODZ08bogWbDY=",
   "Source": "QueueServiceApi",
   "BasePath": "_content/QueueServiceApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\QueueSystem\\ScaleManager\\ScaleManager\\AutoScaleService.csproj",
+      "Identity": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj",
       "Version": 2,
-      "Source": "AutoScaleService",
+      "Source": "ScaleManager",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
       "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
       "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",

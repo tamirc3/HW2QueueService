@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "Bn2LIQxBN+qTunRXMG2lnovwengATBKxGjF6Tu63Rkc=",
-  "Source": "AutoScaleService",
-  "BasePath": "_content/AutoScaleService",
+  "Hash": "veqCmsPHYsHtkYMFoIatz2/OOWSLqB3Jz8PTpALA56g=",
+  "Source": "ScaleManager",
+  "BasePath": "_content/ScaleManager",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
