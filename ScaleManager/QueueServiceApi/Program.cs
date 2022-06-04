@@ -1,4 +1,3 @@
-using Model;
 using QueueServiceApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +7,13 @@ string completedQueue_dequeue_url;
 
 if (!string.IsNullOrEmpty(builder.Configuration["QueueHost"]))
 {
-    requestsQueue_enqueue_url = builder.Configuration["QueueHost"] + QueueUrlConsts.requestsQueue_enqueue_url;
-    completedQueue_dequeue_url = builder.Configuration["QueueHost"] + QueueUrlConsts.completedQueue_dequeue_url;
+    requestsQueue_enqueue_url = builder.Configuration["QueueHost"] + "/Queue/workerQueue/enqueue";
+    completedQueue_dequeue_url = builder.Configuration["QueueHost"] + "/Queue/completedQueue/dequeue";
 }
 else
 {
-    requestsQueue_enqueue_url = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.requestsQueue_enqueue_url;
-    completedQueue_dequeue_url = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.completedQueue_dequeue_url;
+    requestsQueue_enqueue_url = "https://localhost:7108" + "/Queue/workerQueue/enqueue";
+    completedQueue_dequeue_url = "https://localhost:7108" + "/Queue/completedQueue/dequeue";
 }
 
 builder.Services.AddScoped<IWorkerQueueService>(_ =>

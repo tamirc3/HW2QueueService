@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
-using Model;
 
 namespace QueueApi.Controllers
 {

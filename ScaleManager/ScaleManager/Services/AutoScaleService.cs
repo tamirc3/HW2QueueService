@@ -1,7 +1,4 @@
-﻿using AutoScaleService.Services;
-using Model;
-
-namespace ScaleManager.Services
+﻿namespace ScaleManager.Services
 {
     public class AutoScaleService
     {
@@ -39,7 +36,7 @@ namespace ScaleManager.Services
                 seconds++;
 
                 var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync(QueueUrlConsts.requestsQueue_oldestMessageWaitingTime_url);
+                var response = await httpClient.GetAsync("/Queue/workerQueue/oldestMessageWaitingTimeInSeconds");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();

@@ -50,8 +50,6 @@ C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueS
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\bin\Debug\net6.0\Model.dll
-C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\bin\Debug\net6.0\Model.pdb
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\TrafficManager\obj\Debug\net6.0\scopedcss\bundle\TrafficManager.styles.css

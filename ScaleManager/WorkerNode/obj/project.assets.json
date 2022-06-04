@@ -1466,16 +1466,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
-      },
-      "Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Model.dll": {}
-        }
       }
     }
   },
@@ -5403,16 +5393,10 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
-    },
-    "Model/1.0.0": {
-      "type": "project",
-      "path": "../Model/Model.csproj",
-      "msbuildProject": "../Model/Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Model >= 1.0.0",
       "Newtonsoft.Json >= 10.0.3",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
@@ -5443,11 +5427,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

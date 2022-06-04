@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using System.Text;
 using System.Text.Json;
-using Model;
 
 namespace QueueServiceApi.Controllers;
 
@@ -26,6 +25,8 @@ public class WorkerQueueService : IWorkerQueueService
         WorkerRequestMessage workerRequestMessage = new WorkerRequestMessage(hashRequest);
 
         Uri relativeUri = new Uri(requestsQueue_enqueue_url);
+
+        Console.WriteLine($"QueueServiceApi sending enqueue request to: {relativeUri}");
         var request = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
@@ -67,7 +68,9 @@ public class WorkerQueueService : IWorkerQueueService
     public async Task<string> GetCompletedMessageFromQueue()
     {
         string completedMessage = "";
+        Console.WriteLine($"QueueServiceApi completedQueue_dequeue_url: {completedQueue_dequeue_url}");
         Uri relativeUri = new Uri(completedQueue_dequeue_url);
+
         using var request = new HttpRequestMessage {Method = HttpMethod.Get, RequestUri = relativeUri,};
         using HttpClient httpClient = new HttpClient();
         var responseMessage = await httpClient.SendAsync(request);

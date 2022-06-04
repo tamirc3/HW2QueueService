@@ -1,4 +1,3 @@
-using Model;
 using TrafficManager.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +12,8 @@ if (!string.IsNullOrEmpty(builder.Configuration["QueueServiceApiNodeA"]) &&
 }
 else
 {
-     nodeApiA = QueueUrlConsts.LocalHost_QueueServiceApi;
-     nodeApiB = QueueUrlConsts.LocalHost_QueueServiceApi;
+     nodeApiA = "https://localhost:7145";
+     nodeApiB = "https://localhost:7145";
 }
 
 builder.Services.AddScoped<ILoadBalancerClass>(_ =>

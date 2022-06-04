@@ -1,4 +1,3 @@
-using AutoScaleService.Services;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using ScaleManager.Services;

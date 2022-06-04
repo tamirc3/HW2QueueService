@@ -1,6 +1,5 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Model;
 using Newtonsoft.Json;
 
 namespace TrafficManager.Controllers
@@ -20,6 +19,7 @@ namespace TrafficManager.Controllers
         [Route("/enqueue")]
         public async Task<ContentResult> TrafficManagerToEnqueue(int iterations, [FromBody] string dataToDigest)
         {
+         
             //Object validation
             if (iterations <= 0 || dataToDigest is null || dataToDigest.Length == 0)
             {
@@ -30,8 +30,8 @@ namespace TrafficManager.Controllers
             
 
             string host = _loadBalancer.GetNodeUrl();
-            var requestUri = host + QueueUrlConsts.QueueServiceApi_enqueue;
-
+            var requestUri = host + "/queueServiceApi/enqueue";
+            Console.WriteLine($"TM routing to {requestUri}");
             HashRequest hashRequest = new HashRequest()
             {
                 Buffer = dataToDigest,
@@ -59,7 +59,8 @@ namespace TrafficManager.Controllers
             string host = _loadBalancer.GetNodeUrl();
 
             var client = new HttpClient();
-            var url = host+QueueUrlConsts.QueueServiceApi_pullCompleted + "?top=" + top;
+            var url = host+"/queueServiceApi/pullCompleted" + "?top=" + top;
+            Console.WriteLine($"TM routing to {url}");
             var response = await client.GetAsync(url);
             var preparedData = await response.Content.ReadAsStringAsync();
              preparedData = preparedData.Replace("-", string.Empty);

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VsMd+4XeUJTPZr5RbWqE9YWv5uxwpmNV9pYisTs99yA7w+tzDx8m8cbNOv6/5afvMAVjzZMdCPX+IQAdjiqfrQ==",
+  "dgSpecHash": "cBjHauq8P//QgL/LltEddqfwq3iOyvtD+zYYORpEaNUzfu/BfyyUsuXP84sHjzQ+8DscUbizb7oPoitWn/rDoQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\WorkerNode\\WorkerNode.csproj",
   "expectedPackageFiles": [

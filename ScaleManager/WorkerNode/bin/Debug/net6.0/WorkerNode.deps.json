@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v6.0": {
       "WorkerNode/1.0.0": {
         "dependencies": {
-          "Model": "1.0.0",
           "Newtonsoft.Json": "10.0.3",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
@@ -863,11 +862,6 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
-      },
-      "Model/1.0.0": {
-        "runtime": {
-          "Model.dll": {}
-        }
       }
     }
   },
@@ -1506,11 +1500,6 @@
       "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
-    },
-    "Model/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Text;
-using Model;
 using Newtonsoft.Json;
 
 
@@ -85,6 +84,7 @@ namespace WorkerNode
             WorkerRequestMessage currentItem = null;
             var httpClient = new HttpClient();
 
+            Console.WriteLine($"Worker _requestsQueueDequeueUrll: {_requestsQueueDequeueUrl}");
             var response = await httpClient.GetAsync(_requestsQueueDequeueUrl);
             if (response.IsSuccessStatusCode)
             {
@@ -103,7 +103,7 @@ namespace WorkerNode
 
                 var content = JsonConvert.SerializeObject(computedMessage);
 
-                
+                Console.WriteLine($"Worker _completedQueueEnqueueUrl: {_completedQueueEnqueueUrl}");
                 var completedMessageResult = await httpClient.PostAsync(
                     string.Format(_completedQueueEnqueueUrl),
                     new StringContent(content, Encoding.UTF8, "application/json"));

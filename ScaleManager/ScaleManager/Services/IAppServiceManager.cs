@@ -1,4 +1,4 @@
-﻿namespace AutoScaleService.Services;
+﻿namespace ScaleManager.Services;
 
 public interface IAppServiceManager
 {

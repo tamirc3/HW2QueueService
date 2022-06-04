@@ -1583,16 +1583,10 @@
           }
         }
       },
-      "Model/1.0.0": {
-        "runtime": {
-          "Model.dll": {}
-        }
-      },
       "ScaleManager/1.0.0": {
         "dependencies": {
           "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
           "Microsoft.Azure.Management.Fluent": "1.38.1",
-          "Model": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
@@ -2558,11 +2552,6 @@
       "sha512": "sha512-VUV8j6dzkU/7vDgk5k+ob5g7nnch2fNByr0p9aOxMGFGk+tAnTehrZ4qnClF04CVozP1GNN2zrnbsxCmr+iZBg==",
       "path": "windowsazure.storage/9.3.3",
       "hashPath": "windowsazure.storage.9.3.3.nupkg.sha512"
-    },
-    "Model/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "ScaleManager/1.0.0": {
       "type": "project",

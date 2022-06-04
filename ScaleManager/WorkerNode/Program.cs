@@ -1,4 +1,3 @@
-using Model;
 using WorkerNode;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,13 +6,13 @@ string requestQueueUrl_dequeue;
 string completedQueueUrl_enqueue;
 if (!string.IsNullOrEmpty(builder.Configuration["QueueHost"]))
 {
-    requestQueueUrl_dequeue = builder.Configuration["QueueHost"] + QueueUrlConsts.requestsQueue_dequeue_url;
-    completedQueueUrl_enqueue = builder.Configuration["QueueHost"] + QueueUrlConsts.completedQueue_enqueue_url;
+    requestQueueUrl_dequeue = builder.Configuration["QueueHost"] + "/Queue/workerQueue/dequeue";
+    completedQueueUrl_enqueue = builder.Configuration["QueueHost"] + "/Queue/completedQueue/enqueue";
 }
 else
 {
-    requestQueueUrl_dequeue = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.requestsQueue_dequeue_url;
-    completedQueueUrl_enqueue = QueueUrlConsts.LocalHost_Queue + QueueUrlConsts.completedQueue_enqueue_url;
+    requestQueueUrl_dequeue = "https://localhost:7108" + "/Queue/workerQueue/dequeue";
+    completedQueueUrl_enqueue = "https://localhost:7108" + "/Queue/completedQueue/enqueue";
 }
 
 

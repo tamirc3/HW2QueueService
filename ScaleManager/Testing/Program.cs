@@ -6,12 +6,7 @@
 //https://github.com/Azure/azure-sdk-for-net
 
 
-using AutoScaleService.Services;
-using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-
-namespace Infrastructure
+namespace Testing
 {
 
     class Program

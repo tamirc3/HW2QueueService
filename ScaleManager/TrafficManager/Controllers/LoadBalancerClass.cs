@@ -1,5 +1,3 @@
-using Model;
-
 namespace TrafficManager.Controllers;
 
 public interface ILoadBalancerClass

@@ -4,7 +4,7 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using IAppServiceManager = AutoScaleService.Services.IAppServiceManager;
+using IAppServiceManager = ScaleManager.Services.IAppServiceManager;
 
 namespace ScaleManager.Services;
 
@@ -138,6 +138,7 @@ public class AppServiceManager : IAppServiceManager
     private static async Task<bool> WorkerStoppedWorking(IWebApp webApp)
     {
         string stopWorkingUrl = "https://" + webApp.DefaultHostName + "/workerIsBusy";
+        Console.WriteLine($"ScaleManager workerIsBusy: {stopWorkingUrl}");
         using var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(stopWorkingUrl), };
         using HttpClient httpClient = new HttpClient();
         var responseMessage = await httpClient.SendAsync(request);
@@ -156,6 +157,7 @@ public class AppServiceManager : IAppServiceManager
     private static async Task StopWorker(IWebApp webApp)
     {
         string stopWorkingUrl = "https://" + webApp.DefaultHostName + "/stopWorking";
+        Console.WriteLine($"ScaleManager stopWorkingUrl: {stopWorkingUrl}");
         using var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(stopWorkingUrl), };
         using HttpClient httpClient = new HttpClient();
         var responseMessage = await httpClient.SendAsync(request);
