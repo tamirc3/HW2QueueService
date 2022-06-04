@@ -32,6 +32,8 @@ https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure
 
 7.network limitation
 
+8.monitoring and telemtry
+
 
 
 
