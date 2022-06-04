@@ -1,20 +1,30 @@
 using AutoScaleService.Services;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using ScaleManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var tenantID = builder.Configuration["tenantID"];
-var clientID = builder.Configuration["clientID"];
+var tenantId = builder.Configuration["tenantID"];
+var clientId = builder.Configuration["clientID"];
 var clientSecret = builder.Configuration["clientSecret"];
+var subscriptionId = builder.Configuration["subscriptionId"];
+var queueHost =  builder.Configuration["QueueHost"];
 
-var queueHost = builder.Configuration["QueueHost"];
-AzureCredentials azureCredentials = new AzureCredentials(clientSecret, clientID, tenantID);
+AzureCredentials azureCredentials =  SdkContext.AzureCredentialsFactory.FromServicePrincipal(
+    clientId,
+    clientSecret,
+    tenantId,
+    AzureEnvironment.AzureGlobalCloud);
+azureCredentials.WithDefaultSubscription(subscriptionId);
 
-// Add services to the container.
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IAppServiceManager, AppServiceManager>();
+
+var appServiceManager = new AppServiceManager(azureCredentials, queueHost);
+builder.Services.AddSingleton<IAppServiceManager>(_ => appServiceManager);
 
 
 var app = builder.Build();
