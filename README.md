@@ -21,4 +21,6 @@ Assignment 2 for cloud computing course Computer Science MSc Idc
 
 4.Single point of failure
 
-5.Queue size
+5.Scaling/Queue size
+
+6.Failures
