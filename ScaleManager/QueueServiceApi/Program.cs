@@ -1,4 +1,3 @@
-using Model;
 using QueueServiceApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,15 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 string requestsQueue_enqueue_url;
 string completedQueue_dequeue_url;
 
-if (QueueUrlConsts.ShouldTakeValuesFromConfig)
+if (!string.IsNullOrEmpty(builder.Configuration["QueueHost"]))
 {
-    requestsQueue_enqueue_url = builder.Configuration["QueueHost"] + QueueUrlConsts.requestsQueue_enqueue_url;
-    completedQueue_dequeue_url = builder.Configuration["QueueHost"] + QueueUrlConsts.completedQueue_dequeue_url;
+    requestsQueue_enqueue_url = builder.Configuration["QueueHost"] + "/Queue/workerQueue/enqueue";
+    completedQueue_dequeue_url = builder.Configuration["QueueHost"] + "/Queue/completedQueue/dequeue";
 }
 else
 {
-    requestsQueue_enqueue_url = QueueUrlConsts.QueueHost + QueueUrlConsts.requestsQueue_enqueue_url;
-    completedQueue_dequeue_url = QueueUrlConsts.QueueHost + QueueUrlConsts.completedQueue_dequeue_url;
+    requestsQueue_enqueue_url = "https://localhost:7108" + "/Queue/workerQueue/enqueue";
+    completedQueue_dequeue_url = "https://localhost:7108" + "/Queue/completedQueue/dequeue";
 }
 
 builder.Services.AddScoped<IWorkerQueueService>(_ =>
@@ -28,15 +27,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

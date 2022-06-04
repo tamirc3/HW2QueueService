@@ -1,8 +1,8 @@
-﻿namespace AutoScaleService.Services;
+﻿namespace ScaleManager.Services;
 
 public interface IAppServiceManager
 {
     void CreateInfraResources();
-    void CreateAppService();
-    void DeleteAppService();
+    Task CreateAppServiceAsync();
+    Task DeleteAppService();
 }

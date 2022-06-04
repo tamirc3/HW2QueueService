@@ -2327,23 +2327,12 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
-      "Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Model.dll": {}
-        }
-      },
       "ScaleManager/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
           "Microsoft.Azure.Management.Fluent": "1.38.1",
-          "Model": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "compile": {
@@ -7355,11 +7344,6 @@
         "windowsazure.storage.9.3.3.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
-    },
-    "Model/1.0.0": {
-      "type": "project",
-      "path": "../Model/Model.csproj",
-      "msbuildProject": "../Model/Model.csproj"
     },
     "ScaleManager/1.0.0": {
       "type": "project",

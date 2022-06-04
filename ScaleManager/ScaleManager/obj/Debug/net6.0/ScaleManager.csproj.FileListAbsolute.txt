@@ -86,8 +86,6 @@ C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueS
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\bin\Debug\net6.0\Microsoft.WindowsAzure.Storage.dll
-C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\bin\Debug\net6.0\Model.dll
-C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\bin\Debug\net6.0\Model.pdb
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\obj\Debug\net6.0\ScaleManager.csproj.AssemblyReference.cache
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\obj\Debug\net6.0\ScaleManager.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\tacaspi\OneDrive - Microsoft\IDC_Msc\cloudComputing\HW2_queue\HW2QueueService\ScaleManager\ScaleManager\obj\Debug\net6.0\ScaleManager.AssemblyInfoInputs.cache

@@ -2,119 +2,173 @@
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Model;
+using IAppServiceManager = ScaleManager.Services.IAppServiceManager;
 
-namespace AutoScaleService.Services;
+namespace ScaleManager.Services;
 
 public class AppServiceManager : IAppServiceManager
 {
+    private readonly AzureCredentials _azureCredentials;
+    private readonly string _queueHost;
     private IAzure _azureConnection;
     private readonly Region _region = Region.USEast;
     private readonly Dictionary<string, string> _tags = new() { { "environment", "development" } };
-    private IResourceGroup? _resourceGroup;
     private IAppServicePlan? _appServicePlan;
-    private readonly ConcurrentQueue<IWebApp> appSerivcePool = new ConcurrentQueue<IWebApp>();
+    private readonly ConcurrentQueue<IWebApp> _appServicePool = new ConcurrentQueue<IWebApp>();
+    private string _RG_name = "workers";
+    private readonly ILogger<AppServiceManager> _logger;
+    public AppServiceManager(AzureCredentials azureCredentials, string queueHost)
+    {
+        _azureCredentials = azureCredentials;
+        _queueHost = queueHost;
+        CreateInfraResources();
+    }
 
 
     //from https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps/blob/master/Program.cs
-    public void CreateInfraResources()
+    public async void CreateInfraResources()
     {
-
-        //todo, in a script create a servicePrinicpal, get its secreat and put it in the app config to use
-        //MPDP-test-deleteME
-        var creds = SdkContext.AzureCredentialsFactory.FromServicePrincipal(
-            "sp ID",
-            "secreate",
-            "tenant",
-            AzureEnvironment.AzureGlobalCloud);
-
-        _azureConnection = Azure.Configure()
-            .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
-            .Authenticate(creds).WithDefaultSubscription();
-
+        await CreateAzureConnection();
         CreateResourceGroup();
-        CreateAsp();
-
     }
 
-    //todo remove it since we are creating the first one via the script
+    private async Task CreateAzureConnection()
+    {
+        _azureConnection = await Azure.Configure()
+            .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+            .Authenticate(_azureCredentials).WithDefaultSubscriptionAsync();
+    }
+
     private void CreateResourceGroup()
     {
-        _resourceGroup = _azureConnection.ResourceGroups
-            .Define("tacaspi-dotnet2-eus-rg")
+        _azureConnection.ResourceGroups
+            .Define(_RG_name)
             .WithRegion(_region)
             .WithTags(_tags)
             .Create();
     }
 
-    private void CreateAsp()
+    public async Task CreateAppServiceAsync()
     {
-        string appServiceName ="ASP_" + _region.Name + "_" + Guid.NewGuid();
-        _appServicePlan = _azureConnection.AppServices.AppServicePlans
-            .Define(appServiceName)
-            .WithRegion(_region)
-            .WithExistingResourceGroup(_resourceGroup)
-            .WithFreePricingTier()
-            .WithTags(_tags)
-            .Create();
+        try
+        {
+            var appService = CreateAppServiceAndPlan();
+            await UpdateWorkerConfig(appService.Name);
+            _appServicePool.Enqueue(appService);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+
+        }
+
     }
 
-    public void CreateAppService()
+    private IWebApp CreateAppServiceAndPlan()
     {
-        string appServiceName = "App_" + _region.Name + "_" + Guid.NewGuid();
-
-        var app = _azureConnection.WebApps
-            .Define(appServiceName)
-            .WithExistingWindowsPlan(_appServicePlan)
-            .WithExistingResourceGroup(_resourceGroup)
+        string appName = "worker" + _region.Name + Guid.NewGuid();
+        var webapp = _azureConnection.WebApps
+            .Define(appName)
+            .WithRegion(_region)
+            .WithExistingResourceGroup(_RG_name)
+            .WithNewWindowsPlan(PricingTier.FreeF1)
             .DefineSourceControl()
             .WithPublicGitRepository("https://github.com/tamirc3/parkinglotCloud")
             .WithBranch("main")
             .Attach()
             .Create();
-        
-        appSerivcePool.Enqueue(app);
+        return webapp;
     }
 
-    private async Task updateWorkerConfig(string queueHost)
+    private async Task UpdateWorkerConfig(string appName)
     {
-        var credentials = SdkContext.AzureCredentialsFactory
-            .FromServicePrincipal("",
-                "",
-                "",
-                AzureEnvironment.AzureGlobalCloud);
+        try
+        {
+            RestClient restClient = RestClient
+                .Configure()
+                .WithEnvironment(AzureEnvironment.AzureGlobalCloud)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+                .WithCredentials(_azureCredentials)
+                .Build();
 
-        RestClient restClient = RestClient
-            .Configure()
-            .WithEnvironment(AzureEnvironment.AzureGlobalCloud)
-            .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
-            .WithCredentials(credentials)
-            .Build();
+            var _websiteClient = new WebSiteManagementClient(restClient);
+            _websiteClient.SubscriptionId = _azureCredentials.DefaultSubscriptionId;
+            // get
+            var configs = await _websiteClient.
+                WebApps.ListApplicationSettingsAsync(_RG_name, appName);
 
-        var _websiteClient = new WebSiteManagementClient(restClient);
+            // add config
+            configs.Properties.Add("QueueHost", _queueHost);
 
-        // get
-        var configs = await _websiteClient.WebApps.ListApplicationSettingsAsync("RG", "WEBAPP");
+            // update
+            var result = await _websiteClient.WebApps.UpdateApplicationSettingsAsync(_RG_name, appName, configs);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
-        // add config
-        configs.Properties.Add("QueueHost", queueHost);
-
-        // update
-        var result = await _websiteClient.WebApps.UpdateApplicationSettingsAsync("RG", "WEBAPP", configs);
     }
 
-    public void DeleteAppService()
+    public async Task DeleteAppService()
     {
-        appSerivcePool.TryDequeue(out var webApp);
+        _appServicePool.TryDequeue(out var webApp);
 
-        //todo check if the webapp is busy before deleting it
+        if (webApp != null)
+        {
+            await StopWorker(webApp);
 
-        if (webApp != null) _azureConnection.WebApps.DeleteById(webApp.Name);
+            int numberOfSeconds = 0;
+
+            while (numberOfSeconds < 60 * 5)
+            {
+                if (await WorkerStoppedWorking(webApp)) break;
+                numberOfSeconds++;
+                await Task.Delay(1000);
+
+            }
+            await _azureConnection.WebApps.DeleteByIdAsync(webApp.Id);
+            await _azureConnection.AppServices.AppServicePlans.DeleteByIdAsync(webApp.AppServicePlanId);
+        }
+    }
+
+    private static async Task<bool> WorkerStoppedWorking(IWebApp webApp)
+    {
+        string stopWorkingUrl = "https://" + webApp.DefaultHostName + "/workerIsBusy";
+        Console.WriteLine($"ScaleManager workerIsBusy: {stopWorkingUrl}");
+        using var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(stopWorkingUrl), };
+        using HttpClient httpClient = new HttpClient();
+        var responseMessage = await httpClient.SendAsync(request);
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            var res = await responseMessage.Content.ReadAsStringAsync();
+            if (Boolean.Parse(res)) //worker stoped
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static async Task StopWorker(IWebApp webApp)
+    {
+        string stopWorkingUrl = "https://" + webApp.DefaultHostName + "/stopWorking";
+        Console.WriteLine($"ScaleManager stopWorkingUrl: {stopWorkingUrl}");
+        using var request = new HttpRequestMessage { Method = HttpMethod.Get, RequestUri = new Uri(stopWorkingUrl), };
+        using HttpClient httpClient = new HttpClient();
+        var responseMessage = await httpClient.SendAsync(request);
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            //completedMessage = await responseMessage.Content.ReadAsStringAsync();
+        }
     }
 
     public int GetNumberOFWorkers()
     {
-        return appSerivcePool.Count;
+        return _appServicePool.Count;
     }
 }

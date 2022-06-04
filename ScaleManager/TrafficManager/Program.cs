@@ -1,20 +1,32 @@
+using TrafficManager.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+string nodeApiA;
+string nodeApiB;
+if (!string.IsNullOrEmpty(builder.Configuration["QueueServiceApiNodeA"]) &&
+    !string.IsNullOrEmpty(builder.Configuration["QueueServiceApiNodeB"]))
+{
+     nodeApiA = builder.Configuration["QueueServiceApiNodeA"];
+     nodeApiB = builder.Configuration["QueueServiceApiNodeB"];
+}
+else
+{
+     nodeApiA = "https://localhost:7145";
+     nodeApiB = "https://localhost:7145";
+}
+
+builder.Services.AddScoped<ILoadBalancerClass>(_ =>
+    new LoadBalancerClass(nodeApiA, nodeApiB));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

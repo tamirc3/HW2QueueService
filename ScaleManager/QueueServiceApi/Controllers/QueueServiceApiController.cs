@@ -1,6 +1,5 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Model;
 
 namespace QueueServiceApi.Controllers
 {
@@ -20,17 +19,17 @@ namespace QueueServiceApi.Controllers
 
         [HttpGet]
         [Route("queueServiceApi/pullCompleted")]
-        public async Task<ActionResult> Get(int numberOfCompletedRequests)
+        public async Task<ActionResult> Get(int top)
         {
 
-            if (numberOfCompletedRequests < 1)
+            if (top < 1)
             {
                 return BadRequest("minimum items to dequeue is 1");
             }
 
             try
             {
-                var queueResponse = await _workerQueueService.DequeueCompletedMessagesAsync(numberOfCompletedRequests);
+                var queueResponse = await _workerQueueService.DequeueCompletedMessagesAsync(top);
                 if (queueResponse.Count == 0)
                 {
                     return NoContent();
@@ -55,14 +54,11 @@ namespace QueueServiceApi.Controllers
             {
                 return Ok($"{queueResponse.TaskID}");
             }
-            else
-            {
-                var message = queueResponse?.WorkerQueueResponse.Content != null ? await queueResponse.WorkerQueueResponse.Content.ReadAsStringAsync() : string.Empty;
 
+            var message = queueResponse?.WorkerQueueResponse.Content != null ? await queueResponse.WorkerQueueResponse.Content.ReadAsStringAsync() : string.Empty;
 
-                if (queueResponse != null)
-                    return new ObjectResult($"{message}") { StatusCode = (int)queueResponse.WorkerQueueResponse.StatusCode };
-            }
+            if (queueResponse != null)
+                return new ObjectResult($"{message}") { StatusCode = (int)queueResponse.WorkerQueueResponse.StatusCode };
             return new ObjectResult($"failed to enqueue message") { StatusCode = (int)HttpStatusCode.InternalServerError };
         }
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1eTPim4FMLHpzHC+lKTBB5udY99d3q3XP8SvVpO129+xnc/jWR+iBIHhbdDuYN6iWMjvqHu32hQAM+Qc5Ea2/A==",
+  "dgSpecHash": "k5cb1TFrUPdRiOviEGq9dgJAOZCp7rWyn/5mucACI88g8poQ/KWioJkauvFf/0wYtWEdNOYuWv1GMLzFd3b2AA==",
   "success": true,
   "projectFilePath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\QueueServiceApi\\QueueServiceApi.csproj",
   "expectedPackageFiles": [

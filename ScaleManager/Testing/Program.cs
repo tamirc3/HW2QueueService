@@ -1,4 +1,4 @@
-﻿//https://localhost:7113/queueServiceApi/enqueue
+//https://localhost:7113/queueServiceApi/enqueue
 //body:
 //
 //{
@@ -14,17 +14,7 @@
 //["{\"buffer\":\"48BD4FB5935FB1EACA504AA81012955D3CEE8102572E115B69E48C3FDD9B65E051519131F091EB10E82E7BB433FB53CF4F0C9A1B74524AA3B6058FF308E3DEF8\",\"id\":\"723aaa19-7141-4a8f-a5f2-9293b93436e5\"}"]
 
 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.IO;
-
-namespace ConsoleApplication1
+namespace Testing
 {
     class Program
     {

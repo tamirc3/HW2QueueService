@@ -1,15 +1,12 @@
-﻿using Model;
-using Newtonsoft.Json;
-
-namespace AutoScaleService.Services
+﻿namespace ScaleManager.Services
 {
     public class AutoScaleService
     {
-        private readonly AppServiceManager _appServiceManager;
+        private readonly IAppServiceManager _appServiceManager;
 
-        public AutoScaleService()
+        public AutoScaleService(IAppServiceManager appServiceManager)
         {
-            _appServiceManager = new AppServiceManager();
+            _appServiceManager = appServiceManager;
         }
         public async Task AutoScaleCheck()
         {
@@ -19,12 +16,12 @@ namespace AutoScaleService.Services
 
                 if (queueStatics.TooManyLongWaitingMessages())
                 {
-                    _appServiceManager.CreateAppService();
+                    await _appServiceManager.CreateAppServiceAsync();
                     await Task.Delay(60 * 1000); // let give the new app service some time to work
                 }
                 else if (queueStatics.MessagesAreProcessedFastEnough())
                 {
-                    _appServiceManager.DeleteAppService();
+                    await _appServiceManager.DeleteAppService();
                 }
             }
         }
@@ -39,7 +36,7 @@ namespace AutoScaleService.Services
                 seconds++;
 
                 var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync(QueueUrlConsts.requestsQueue_oldestMessageWaitingTime_url);
+                var response = await httpClient.GetAsync("/Queue/workerQueue/oldestMessageWaitingTimeInSeconds");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();

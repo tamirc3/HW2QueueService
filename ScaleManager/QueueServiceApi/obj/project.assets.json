@@ -2320,23 +2320,12 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
-      "Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Model.dll": {}
-        }
-      },
       "ScaleManager/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.Azure.Management.AppService.Fluent": "1.38.1",
           "Microsoft.Azure.Management.Fluent": "1.38.1",
-          "Model": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "compile": {
@@ -7334,11 +7323,6 @@
         "windowsazure.storage.nuspec"
       ]
     },
-    "Model/1.0.0": {
-      "type": "project",
-      "path": "../Model/Model.csproj",
-      "msbuildProject": "../Model/Model.csproj"
-    },
     "ScaleManager/1.0.0": {
       "type": "project",
       "path": "../ScaleManager/ScaleManager.csproj",
@@ -7347,7 +7331,6 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Model >= 1.0.0",
       "ScaleManager >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
@@ -7379,9 +7362,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\Model\\Model.csproj"
-            },
             "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj": {
               "projectPath": "C:\\Users\\tacaspi\\OneDrive - Microsoft\\IDC_Msc\\cloudComputing\\HW2_queue\\HW2QueueService\\ScaleManager\\ScaleManager\\ScaleManager.csproj"
             }

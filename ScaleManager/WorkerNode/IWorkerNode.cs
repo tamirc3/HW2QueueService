@@ -1,6 +1,4 @@
-﻿using Model;
-
-namespace WorkerNode
+﻿namespace WorkerNode
 {
     public interface IWorkerNode
     {
