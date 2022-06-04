@@ -9,9 +9,14 @@ Assignment 2 for cloud computing course Computer Science MSc Idc
 
 ## design
 in our implemntaiton we crated the following nodes:
+
 1.Worker node- this node will take the message from the 'requests' queue proccess the message and place the response in the 'completed' queue
+
 2.Queue node- this node is an implmention of a queue, it holds 2 queues -'requests' and 'completed' messages.
-3.Queue service Api- this node has 2 endpoints of 'enqueue' and 'pullCompleted'. the node will send the message got for the 'enqueue' and will place it in the 'request' queue.  message for 'pullCompleted' will call the queue node and get the completed messges and return it.
+
+3.Queue service Api- this node has 2 endpoints of 'enqueue' and 'pullCompleted'. the node will send the message got for the 'enqueue' and will place it in the 
+'request' queue.  message for 'pullCompleted' will call the queue node and get the completed messges and return it.
+
 4.Traffic manager- will have the applicaiton URL that will route the requests into 2 instances of 'queue service api'. the requests are routed in random to one of the queue service api nodes.
 
 
