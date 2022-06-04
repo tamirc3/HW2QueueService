@@ -3,7 +3,9 @@
 Assignment 2 for cloud computing course Computer Science MSc Idc
 
 ## Prerequisite:
-1.create a free subscription in Azure (https://azure.microsoft.com/en-us/free/) 2.download and install Azure CLI (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+1.create a free subscription in Azure (https://azure.microsoft.com/en-us/free/) 
+
+2.download and install Azure CLI (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 
 ## How to run:
 
