@@ -3,7 +3,7 @@
 #                                                          #
 ############################################################
 
-az login --use-device-code
+# az login --use-device-code
 
 #############################################################
 ##          see which avilable locations we have            #
@@ -14,13 +14,13 @@ $locations = az account list-locations | ConvertFrom-Json
 $choosenLocation =  $locations[0].name
 echo $choosenLocation
 
-$randomIdentifier= "1" #Get-Random // can add this flag to generate a unique name each deployment
+$randomIdentifier= Get-Random #// can add this flag to generate a unique name each deployment
 $location=$choosenLocation
-$resourceGroup="HomeWork2-cloudcomputing-rg-$randomIdentifier"
+$resourceGroup="HomeWork2-cloudcompute-rg-$randomIdentifier"
 $tag="deploy-github"
 $gitrepoQueue="https://github.com/evyatarweiss/HW2_QueueAPI" 
 $appServicePlan="Cloud-ComputingHW2-$randomIdentifier"
-$webappQueue="hw2CloudComputing-queue-$randomIdentifier"
+
 
 #############################################################
 ##          Create a resource group                         #
@@ -44,6 +44,7 @@ $AppservicePlanSub = az appservice plan create --name $appServicePlan --resource
 #############################################################
 
 #1
+$webappQueue="hw2CloudComputing-queue-endpoint-$randomIdentifier"
 echo "Creating $webappQueue"
 $QueueAPIwebApp = az webapp create --name $webappQueue --resource-group $resourceGroup --plan $appServicePlan | ConvertFrom-Json
 
@@ -58,7 +59,7 @@ az webapp deployment source config --name $webappQueue --resource-group $resourc
 
 #1
 
-$webappAPI="hw2-web-app-API-$randomIdentifier"
+$webappAPI="hw2-CloudComputing-web-app-API1-$randomIdentifier"
 # Create a web app for API.
 
 echo "Creating $webappAPI"
@@ -86,7 +87,7 @@ az webapp config appsettings set -g $resourceGroup -n $webappAPI --settings Queu
 
 #1
 
-$webappAPI2="hw2-web-app-API2-$randomIdentifier"
+$webappAPI2="hw2-CloudComputing-web-app-API2-$randomIdentifier"
 # Create a web app for API.
 
 echo "Creating $webappAPI2"
@@ -111,7 +112,7 @@ az webapp config appsettings set -g $resourceGroup -n $webappAPI2 --settings Que
 ##                                                          #
 #############################################################
 
-$webappWN="hw2-web-app-WorkerNode-$randomIdentifier"
+$webappWN="hw2-web-app-WorkerNode1-$randomIdentifier"
 # Create a web app for API.
 
 echo "Creating $webappWN"
@@ -152,7 +153,6 @@ $gitrepoTM="https://github.com/evyatarweiss/HW2_TrafficManager"
 az webapp deployment source config --name $webappTM --resource-group $resourceGroup `
 --repo-url $gitrepoTM --branch main --manual-integration 
 
-####Please note that there is a pop-up window here####
 
 $webAppSettings =  az webapp config appsettings list --name $webappTM --resource-group $resourceGroup
 $appsettingList=$webAppSettings.SiteConfig.AppSettings
@@ -193,10 +193,10 @@ $appsettingList=$webAppSettings.SiteConfig.AppSettings
 #current appsettings
 $appsettingList
 
-Creating a service principal and grant permissions to the subscription
+#Creating a service principal and grant permissions to the subscription
 $ServicePrincipal = az ad sp create-for-rbac --role "Owner" --scopes $ServicePrincipalScopes | ConvertFrom-Json
 
-modify the settings
+#modify the settings
 $tenantId = $ServicePrincipal.tenant
 $clientId = $ServicePrincipal.appId
 $clientSecret = $ServicePrincipal.password
