@@ -9,11 +9,11 @@ Assignment 2 for cloud computing course Computer Science MSc Idc
 
 ## How to run:
 
-rung the PS script Assignment2.ps1, the script will create:
+run the PS script CloudComputingHW2.ps1, the script will create:
 
 1.Resource group
 
-2.App service plan
+2.App service plan x 3
 
 3.Queue node
 
@@ -23,7 +23,7 @@ rung the PS script Assignment2.ps1, the script will create:
 
 6.Traffic manager node
 
-The resources will be created at a resource group called 'HomeWork2-cloudcompute-rg-' concatenated with a randomIdentifier. During runtime when there is a need to create addtional workers they will be created at a resource group called 'workers'
+The resources will be created at a resource group called 'HomeWork2-cloudcompute-rg-' concatenated with a randomIdentifier. During runtime when there is a need to create additional workers they will be created at a resource group called 'workers'
 
 
 
@@ -125,10 +125,10 @@ since we are using free sku we are limited 250 connections per instance,which me
 
 https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure-web-sites/
 
-3.since we are using the free SKU we have a we got quota encforment
+3.since we are using the free SKU we have a we got quota enforcement
 https://docs.microsoft.com/en-us/azure/app-service/web-sites-monitor
 
-so its possible that aftera few minutes of usage we can get to CPU quota limit and get:
+so its possible that after a few minutes of usage we can get to CPU quota limit and get:
 
 ![image](https://user-images.githubusercontent.com/25264394/172049393-a5714d4e-807f-4488-8764-1f34b85cedec.png)
 
