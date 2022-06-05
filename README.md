@@ -23,6 +23,7 @@ rung the PS script Assignment2.ps1, the script will create:
 
 6.Traffic manager node
 
+The resources will be created at a resource group called 'HomeWork2-cloudcompute-rg-' concantnated with a randomIdentifier
 
 
 
@@ -114,11 +115,15 @@ we are using the free Sku and have our 2 queues on one server, if we want to inc
 in order to be able to continue and scale we need to scale out, for that we need to implement the queue in such a way that we can divide the message into several queues in several servers, to do that we need to use partiotining such that we will partition the meesage into diffrent queue servers.
 
 5.Failures
-in our implmention we don't handle failures, in production enviorment we will need to handle failrues in order to avoid data loss.
-persistency- the queue that we implment we are using in memory queue, in prodcution we will write the message also to the disk such that if the server will restart we will not lose any message.
+In our implmention we don't handle failures, in production enviorment we will need to handle failrues in order to avoid data loss.
 
-network failures- for sending and reciving messages for retryable codes (5xx)
+Persistency- the queue that we implment we are using in memory queue, in prodcution we will write the message also to the disk such that if the server will restart we will not lose any message.
+As mentinoted above in order to have a global application we will have the cluster in several regions across the globe meaning each region will have its own queue, our assumpation is that there is no need to server client cross regions, if we will need to do it we will have a one centrlized queue which is divided into several servers and partitions.
 
+Failures in the worker- in case there is an issue with the worker like crashing/ network issue, we don't want to lose messages that the worker took.
+For that we will need to do 'soft delete' approach meaning when the worker took a message from the queue we really remove it from the queue only when the worker will send back a response that it completed the work on that message, while the worker is working on the message the message will be marked in a way that other workers won't fetch it from the queue. For implmenting the above logic we will need to implment the queue using a DB which we will created a queue abstraction for it.
+
+Failure in the Scale manager - in case there is a crash/ the server is in unhealthy state we will do a fail over to a back up scale manager
 
 
 6.network limitation
