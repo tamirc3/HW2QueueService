@@ -19,28 +19,77 @@ rung the PS script Assignment2.ps1, the script will create:
 
 4.Worker node
 
-5.Queue service api x 2
+5.Queue service api x 2 (which has the enqueue and pullCompleted APIs)
 
 6.Traffic manager node
 
-The resources will be created at a resource group called 'HomeWork2-cloudcompute-rg-' concatenated with a randomIdentifier
+The resources will be created at a resource group called 'HomeWork2-cloudcompute-rg-' concatenated with a randomIdentifier. During runtime when there is a need to create addtional workers they will be created at a resource group called 'workers'
 
 
 
 ## design
 In our implementation we created the following nodes:
 
-1.Worker node- this node will take the message from the 'requests' queue process the message and place the response in the 'completed' queue
+1.Worker node- this node will take the message from the 'requests' queue process the message and place the response in the 'completed' queue. We are creating one worker by default menaning that we will always have at least one worker node in the system.
 
-2.Queue node- this node is an implementation of a queue, it holds 2 queues -'requests' and 'completed' messages.
+The code is in:https://github.com/evyatarweiss/HW2_WorkerNode
 
-3.Queue service Api- this node has 2 endpoints of 'enqueue' and 'pullCompleted'. the node will send the message got for the 'enqueue' and will place it in the 
-'request' queue.  message for 'pullCompleted' will call the queue node and get the completed messages and return it.
+The worker resource will be called hw2-web-app-WorkerNode1-<randomIdentifier>
 
-4.Traffic manager- will have the application URL that will route the requests into 2 instances of 'queue service api'. the requests are routed in random to one of the queue service api nodes.
+2.Queue node- this node is an implementation of a queue, it holds 2 queues -'requests' and 'completed' messages, each queue is an in memory queue.
+
+The queue resource will be called hw2CloudComputing-queue-endpoint- <randomIdentifier>
+
+The code is in:https://github.com/evyatarweiss/HW2_QueueAPI
+
+3.Queue service Api- this node has 2 endpoints of 'enqueue' and 'pullCompleted'. the node will send the message got from the traffic manager for the 'enqueue' and will place it in the 'request' queue.  message from the traffic manager for 'pullCompleted' will call the queue node and get the completed messages and return it.
+
+The code is in :https://github.com/evyatarweiss/HW2_QueueServiceAPI
+  
+The first api resource will be called hw2-CloudComputing-web-app-API1-<randomIdentifier>
+The second api resource will be called hw2-CloudComputing-web-app-API2-<randomIdentifier>
+
+  
+4.Scale manger - this node job it create an autoscale functionality for the worker nodes, it will check that queue status (detailed explnation in the next section) abd will create and delete workers as needed.
+
+The code is in:https://github.com/tamirc3/HW2_ScaleManager
+  
+The resource will be called hw2-web-app-Scale-Manager-<randomIdentifier>
+  
+5.Traffic manager- will have the application URL that will get requests from clients and will route the requests into 2 instances of 'queue service api'. the requests are routed in random to one of the queue service api nodes.
+
+The code is in:https://github.com/evyatarweiss/HW2_TrafficManager
+
+The resource will be called hw2-web-app-Traffic-Manager-<randomIdentifier>
+
+The url for the application to send enqueue and pullCompleted is (see in the next section swagger example):
+https://hw2-web-app-traffic-manager-<randomIdentifier>.azurewebsites.net/
+  
+**Example request for enqueue, PUT request**
+https://hw2-web-app-traffic-manager-1174986663.azurewebsites.net/enqueue?iterations=50
+
+and the string content is in the body of the request.
+  
+the response will be an Id to track the request, for example:
+ 
+![image](https://user-images.githubusercontent.com/25264394/172063020-79021efd-7bb5-48fb-aa10-2d9449a3bffc.png)
+
+**Example request for pullCompleted, POST request**
+
+the url will be: https://hw2-web-app-traffic-manager-1174986663.azurewebsites.net/pullCompleted?top=10
+  
+Example response 
+  
+![image](https://user-images.githubusercontent.com/25264394/172063078-71d620eb-f93e-4fa4-95a9-90cb5eb0ab27.png)
+
+  
+'buffer' is the hased result of the data, 'id' is the id of the request that was genereated in the enqueue request
+  
+  
+**Swagger:**
 
 
-we added to each node a 'swagger' api for debugging and troubleshooting, for that after each resource is created we can go to the resource endpoint and add 'swagger'
+We added to each node a 'swagger' api for troubleshooting and diagnostics,after each resource is created we can go to the resource endpoint and add 'swagger'
 
 Mock URL :
 
@@ -55,7 +104,7 @@ We also added swagger to check the Queue status, each queue (requests and comple
 ![image](https://user-images.githubusercontent.com/25264394/172049899-cef2073b-c928-4a44-8908-397bc6a3ec07.png)
 
 
-Scaling rules:
+**Scaling rules:**
 
 our scale manager nodes is checking the requests queue each seconds for duration of a minutes, in each check we are doing peek to the queue and checking what is the oldest message waiting time in the queue, if we have more then 20 events that a message waited for more then 3 seconds we are creating a new worker and adding it to the pool of workers.
 
