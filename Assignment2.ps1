@@ -3,7 +3,7 @@
 #                                                          #
 ############################################################
 
-# az login --use-device-code
+az login --use-device-code
 
 #############################################################
 ##          see which avilable locations we have            #
@@ -177,7 +177,7 @@ $webappSM="hw2-web-app-Scale-Manager-$randomIdentifier"
 echo "Creating $webappSM"
 az webapp create --name $webappSM --resource-group $resourceGroup --plan $appServicePlan 
 
-$gitrepoSM="https://github.com/evyatarweiss/HW2_ScaleManager" 
+$gitrepoSM="https://github.com/tamirc3/HW2_ScaleManager" 
 
 #Deploy webApp API
 az webapp deployment source config --name $webappSM --resource-group $resourceGroup `
