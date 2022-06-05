@@ -88,8 +88,11 @@ we can see it in the app service dashboard:
 
 
 ## If the system was made for production:
+0. Choosing the right SKU
 
-1.Secuirty
+as we SAW using the free SKU has its quota limitations, in production we would do capcity planning and according to the expected load we will chose the the SKU such that we won't get to a point that the app is stoped due to lack of quota.
+
+1.Security
 
 the current implmention does not have any authentication and authorization which makes the system vunelrable for attackers.In case of production systems all the APIs should not be public and should be authentication using for example a JWT token issued by AAD and have an allowed list of applications that can send requets.
 In case we wnat our service to be publicly avilable we will keep the traffic manager end point unauthenticated, but all other apis will be authetincated since we only want to expose the 'enqueue'  and 'pullCompleted' APIs
