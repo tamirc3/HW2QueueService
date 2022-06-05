@@ -70,6 +70,8 @@ After we got that the worker is stopped working we are deleting the worker.
 2.network connection limitations
 since we are using free sku we are limited 250 connections per instance,which means that more then that we will get connection failures to the servers
 
+https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure-web-sites/
+
 3.since we are using the free SKU we have a 
 we got quota encforment
 https://docs.microsoft.com/en-us/azure/app-service/web-sites-monitor
@@ -83,7 +85,7 @@ we can see it in the app service dashboard:
 ![image](https://user-images.githubusercontent.com/25264394/172049358-de6a3b31-ad5f-4ad6-ae1f-3472cc53167f.png)
 
 
-https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure-web-sites/
+
 
 ## If the system was made for production:
 
