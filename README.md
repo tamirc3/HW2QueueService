@@ -27,7 +27,7 @@ The resources will be created at a resource group called 'HomeWork2-cloudcompute
 
 
 
-## design
+## Design
 In our implementation we created the following nodes:
 
 1.Worker node- this node will take the message from the 'requests' queue process the message and place the response in the 'completed' queue. We are creating one worker by default menaning that we will always have at least one worker node in the system. In each worker node we are creating long running tasks as the number of cores in the server in order to maximize the work in that node.
@@ -116,7 +116,7 @@ worker deletion - we are trying to optimize the work rather than cost (same for 
 If we are getting more than 45 events that the message is waiting less than 3 seconds we are calling the worker to stop working ('stopworking' api), which means it will not take any more messages from the queue and wait for it to complete the current message ( we are using 'IsBusy' api to check if the worker currently has a message that its working on-if yes wait for it to complete). After we get that the worker has stopped working we are deleting the worker and its app service plan.
 
 
-## notes
+## Notes
 1.the free plan that we are using doesn't enable the 'Always On' feature, after 20m that the app is idle it is turned off automatically
 (https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal) "Always On: Keeps the app loaded even when there's no traffic. When Always On is not turned on (default), the app is unloaded after 20 minutes without any incoming requests. The unloaded app can cause high latency for new requests because of its warm-up time.
 
@@ -141,52 +141,53 @@ once hitting the quota limit the app is stopped, the mitigation is to restart / 
 
 
 ## If the system was made for production:
-0. Choosing the right SKU
+0. **Choosing the right SKU**
 
-As we saw using the free SKU has its quota limitations, in production we would do capacity planning and according to the expected load we will choose the SKU such that we won't get to a point that the app is stopped due to lack of quota and has sufficent amount of connections.
+As we saw using the free SKU has its quota limitations, in production we would do capacity planning for the estimated number of requests that the application needs to server and according to the expected load we will choose the SKU such that we won't get to a point that the app is stopped due to lack of quota and has sufficent amount of connections.
 
-1.Security
+1.**Security**
 
-The current implementation does not have any authentication and authorization which makes the system vulnerable for attackers.In case of production systems all the APIs should not be public and should be authentication using for example a JWT token issued by AAD and have an allowed list of applications that can send requests.
-In case we want our service to be publicly available we will keep the traffic manager endpoint authentication, but all other apis will be authenticated since we only want to expose the 'enqueue'  and 'pullCompleted' APIs
+The current implementation does not have any authentication and authorization which makes the system vulnerable for attackers. In case of production systems all the APIs should not be public and should be authentication using for example a JWT token issued by AAD and have an allowed list of applications that can send requests.
+In case we want our service to be publicly available we will keep the traffic manager endpoint unauthenticated but all other apis will be authenticated since we only want to expose the 'enqueue'  and 'pullCompleted' APIs from the traffic manager
 
-2.Latency
+2.**Latency**
 
 right now we are only using one region- EastUS, which means that users not near to that regions will have high latency. If it was a production environment we would create several clusters of the application in a few regions across the globe,such that each user will be routed to the nearest data center in his geo.
-
-
-3.Single point of failure
-In our implementation we have 3 points of failure- the Traffic manager,scale manager and queue.
-Scale manager:
- in a production environment we can have 2 options for handling the scale manager, create 2 instances of it one 'on' and one 'off' and in case of failure we will do a failover to the backup server.
- The second option is that in case of a failure don't use that scale manager or even the entire resources in the region such that all the requests will be routed to another cluster.
-
-4.Scaling/Queue size
+ 
+3.**Scaling/Queue size**
 
 We are using the free Sku and have our 2 queues on one server, if we want to increase our scale we can scale up the server for more memory but that can not scale indefinitely.
-in order to be able to continue and scale we need to scale out, for that we need to implement the queue in such a way that we can divide the message into several queues in several servers, to do that we need to use partitioning such that we will partition the message into different queue servers.
+In order to be able to continue and scale we need to scale out, for that we need to implement the queue in such a way that we can divide the message into several queues in several servers, to do that we need to use partitioning such that we will partition the messages into different queue servers.
 
-5.Failures
+4.**Failures**
 In our implementation we don't handle failures, in a production environment we will need to handle failures in order to avoid data loss.
 
-Persistency- the queue that we implement we are using in memory queue, in production we will write the message also to the disk such that if the server will restart we will not lose any message.
+  
+Persistency- the queue that we implemented is by using an in memory queue which is a single point of failure, in production we will write the message also to the disk such that if the server will restart we will not lose any message.
 As mentioned above in order to have a global application we will have the cluster in several regions across the globe meaning each region will have its own queue, our assumption is that there is no need to server client cross regions, if we will need to do it we will have a one centralized queue which is divided into several servers and partitions.
 
 Failures in the worker- in case there is an issue with the worker like a crashing/ network issue, we don't want to lose messages that the worker took.
-For that we will need to do 'soft delete' approach meaning when the worker took a message from the queue we really remove it from the queue only when the worker will send back a response that it completed the work on that message, while the worker is working on the message the message will be marked in a way that other workers won't fetch it from the queue. For implementing the above logic we will need to implement the queue using a DB which we will created a queue abstraction for it.
+For that we will need to do 'soft delete' approach meaning when the worker took a message from the queue we will really remove it from the queue only when the worker will send back a response that it completed the work on that message, while the worker is working on the message the message will be marked in a way that other workers won't fetch it from the queue. For implementing the above logic we will need to implement the queue using a DB which we will created a queue abstraction for it.
 
-Failure in the Scale manager - in case there is a crash/ the server is in unhealthy state we will do a fail over to a back up scale manager
+Failure in the Scale manager -in a production environment we can have 2 options for handling the scale manager, create 2 instances of it one 'on' and one 'off' and in case of failure we will do a failover to the backup server.
+The second option is that in case of a failure don't use that scale manager and even the entire resources in the region meaning to take that cluster out from traffic, such that all the requests will be routed to another cluster while we try to recover the failed node.
+  
+ Failure in the Traffic manager- to over come a failure in the traffic manager we will use 2 instances of this node and in case of a failure we will do a failover and start using the backup
 
 
-6.network limitation
+5.**Network limitation**
 as we seen in the free SKU there a limitation of the number of connections to the server, in production environment we will do capacity planning for the application and get an estimation of how many requests we expect to get, according to that we will select the right SKU and allocate enough servers to distribute the load between them.
 
-7.monitoring and telemetry
-in a production environment we will need to gather telemetry about how the application is working, we would collect the logs and create monitoring for success/failures such that if there is an incident we will be aware and engage to resolve it.
+6.**Monitoring and telemetry**
+In a production environment we will need to gather telemetry about how the application is working, we would collect the logs and create monitoring for success/failures such that if there is an incident we will be aware and engage to resolve it.
 
-8.BCDR (Business Continuity Disaster Recovery)
+7.**BCDR (Business Continuity Disaster Recovery)**
 our application needs to be 'disaster safe' meaning that if one region will be down our application will continue running.
 creating several replicas of the application in several regions will enable us to have high availability and in case of a failures in one of Azure regions stop using that region and routing the traffic to another region
+  
+8.**Load balancing**
+ In our implemention we randomly selected one of the instance with the enqueue and pullCompleted Api (queue api service), in production enviorment we will have a better logic to decide which node to use - less busy node (by CPU), fastest responding node to a health check call to achive best latency.
+  
 
 
 
