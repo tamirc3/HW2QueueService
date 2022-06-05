@@ -9,8 +9,25 @@ Assignment 2 for cloud computing course Computer Science MSc Idc
 
 ## How to run:
 
+rung the PS script Assignment2.ps1, the script will create:
+
+1.Resource group
+
+2.App service plan
+
+3.Queue node
+
+4.Worker node
+
+5.Queue service api x 2
+
+6.Traffic manager node
+
+
+
+
 ## design
-in our implemntaiton we crated the following nodes:
+In our implemntaiton we crated the following nodes:
 
 1.Worker node- this node will take the message from the 'requests' queue proccess the message and place the response in the 'completed' queue
 
@@ -20,6 +37,30 @@ in our implemntaiton we crated the following nodes:
 'request' queue.  message for 'pullCompleted' will call the queue node and get the completed messges and return it.
 
 4.Traffic manager- will have the applicaiton URL that will route the requests into 2 instances of 'queue service api'. the requests are routed in random to one of the queue service api nodes.
+
+
+we added to each node a 'swagger' api for debugging and troubleshooting, for that after each resource is created we can go to the resource endpoint and add 'swagger'
+
+Mock URL :
+
+'https://hw2-web-app-traffic-manager-1174986663.azurewebsites.net/swagger'
+
+
+![image](https://user-images.githubusercontent.com/25264394/172049830-eb213200-de48-49c6-8805-c2a2c192ccbc.png)
+
+
+We also added swagger to check the Queue status, each queue (requests and completed) has a GET API to check the number of items in the queue, and also we have an api to check with is the longest waiting message in the request queue
+
+![image](https://user-images.githubusercontent.com/25264394/172049899-cef2073b-c928-4a44-8908-397bc6a3ec07.png)
+
+
+Scaling rules:
+
+our scale manager nodes is checking the requests queue each seconds for duration of a minutes, in each check we are doing peek to the queue and checking what is the oldest message waiting time in the queue, if we have more then 20 events that a message waited for more then 3 seconds we are creating a new worker and adding it to the pool of workers.
+
+worker deletion - we are trying to optimize the work rather then cost (same for production, we will prefer to pay more to serve more requests and wait for their completion then stop the work in progress).
+If we are getting more then 45 events that the message is waiting less then 3 seconds we are calling the worker to stop working,which means it will not take any more messages from the queue and wait for it to complete the curremt message ( we are using 'isBusy' api to check when the worker will stop working).
+After we got that the worker is stopped working we are deleting the worker.
 
 
 ## notes
