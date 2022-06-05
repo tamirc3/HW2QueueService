@@ -137,7 +137,17 @@ we can see it in the app service dashboard:
 ![image](https://user-images.githubusercontent.com/25264394/172049358-de6a3b31-ad5f-4ad6-ae1f-3472cc53167f.png)
 
 once hitting the quota limit the app is stopped, the mitigation is to restart / wait a few minutes to regain our quota.
+  
+4. The number of app service plans that we can use in a free SKU is 10 which limit our application quota.
 
+  
+ https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits
+  
+ ![image](https://user-images.githubusercontent.com/25264394/172064420-8897fd83-f7c3-44f9-82d7-1512a5f8e23b.png)
+
+in the initial deployment we are using 1 app service plan for the worker,traffic manager,scale manager.
+ 1 app service plan for the 2 nodes of queue service api and 1 app serivce plan for the worker node.
+during runtime we are creating a new app service and a new app serivce plan for each new worker
 
 
 ## If the system was made for production:
