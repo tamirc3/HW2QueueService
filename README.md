@@ -30,7 +30,7 @@ The resources will be created at a resource group called 'HomeWork2-cloudcompute
 ## design
 In our implementation we created the following nodes:
 
-1.Worker node- this node will take the message from the 'requests' queue process the message and place the response in the 'completed' queue. We are creating one worker by default menaning that we will always have at least one worker node in the system.
+1.Worker node- this node will take the message from the 'requests' queue process the message and place the response in the 'completed' queue. We are creating one worker by default menaning that we will always have at least one worker node in the system. In each worker node we are creating long running tasks as the number of cores in the server in order to maximize the work in that node.
 
 The code is in:https://github.com/evyatarweiss/HW2_WorkerNode
 
@@ -50,7 +50,7 @@ The first api resource will be called hw2-CloudComputing-web-app-API1-<randomIde
 The second api resource will be called hw2-CloudComputing-web-app-API2-<randomIdentifier>
 
   
-4.Scale manger - this node job it create an autoscale functionality for the worker nodes, it will check that queue status (detailed explnation in the next section) abd will create and delete workers as needed.
+4.Scale manger - this node job it create an autoscale functionality for the worker nodes, it will check that queue status (detailed explnation in the next section 'Scaling rules') abd will create and delete workers as needed.
 
 The code is in:https://github.com/tamirc3/HW2_ScaleManager
   
@@ -99,18 +99,21 @@ Mock URL :
 ![image](https://user-images.githubusercontent.com/25264394/172049830-eb213200-de48-49c6-8805-c2a2c192ccbc.png)
 
 
-We also added swagger to check the Queue status, each queue (requests and completed) has a GET API to check the number of items in the queue, and also we have an api to check with is the longest waiting message in the request queue
+We also added swagger to check the Queue status, each queue (requests and completed) has a GET API to check the number of items in the queue, and also we have an api to check what is the longest waiting message in the request queue which is used by the scaling manager to decide if to create/delete worker nodes.
 
 ![image](https://user-images.githubusercontent.com/25264394/172049899-cef2073b-c928-4a44-8908-397bc6a3ec07.png)
+  
+ Worker node swagger:
+  
+![image](https://user-images.githubusercontent.com/25264394/172063334-5fd97727-7fda-44e9-87fd-036d2fadd496.png)
 
 
 **Scaling rules:**
 
-our scale manager nodes is checking the requests queue each seconds for duration of a minutes, in each check we are doing peek to the queue and checking what is the oldest message waiting time in the queue, if we have more then 20 events that a message waited for more then 3 seconds we are creating a new worker and adding it to the pool of workers.
+Our scale manager nodes is checking the requests queue each second for the duration of one minute. in each check we are doing peek to the queue and checking what is the oldest message waiting time in the queue, if we have more then 20 events that a message waited for more then 3 seconds we are creating a new worker and adding it to the pool of workers.
 
 worker deletion - we are trying to optimize the work rather than cost (same for production, we will prefer to pay more to serve more requests and wait for their completion then stop the work in progress).
-If we are getting more than 45 events that the message is waiting less than 3 seconds we are calling the worker to stop working,which means it will not take any more messages from the queue and wait for it to complete the current message ( we are using 'isBusy' api to check when the worker will stop working).
-After we get that the worker has stopped working we are deleting the worker.
+If we are getting more than 45 events that the message is waiting less than 3 seconds we are calling the worker to stop working ('stopworking' api), which means it will not take any more messages from the queue and wait for it to complete the current message ( we are using 'IsBusy' api to check if the worker currently has a message that its working on-if yes wait for it to complete). After we get that the worker has stopped working we are deleting the worker and its app service plan.
 
 
 ## notes
@@ -122,11 +125,10 @@ since we are using free sku we are limited 250 connections per instance,which me
 
 https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure-web-sites/
 
-3.since we are using the free SKU we have a 
-we got quota encforment
+3.since we are using the free SKU we have a we got quota encforment
 https://docs.microsoft.com/en-us/azure/app-service/web-sites-monitor
 
-and after a few minutes of usage we can get to CPU quota limit and get:
+so its possible that aftera few minutes of usage we can get to CPU quota limit and get:
 
 ![image](https://user-images.githubusercontent.com/25264394/172049393-a5714d4e-807f-4488-8764-1f34b85cedec.png)
 
@@ -134,13 +136,14 @@ we can see it in the app service dashboard:
 
 ![image](https://user-images.githubusercontent.com/25264394/172049358-de6a3b31-ad5f-4ad6-ae1f-3472cc53167f.png)
 
+once hitting the quota limit the app is stopped, the mitigation is to restart / wait a few minutes to regain our quota.
 
 
 
 ## If the system was made for production:
 0. Choosing the right SKU
 
-As we SAW using the free SKU has its quota limitations, in production we would do capacity planning and according to the expected load we will choose the SKU such that we won't get to a point that the app is stopped due to lack of quota.
+As we saw using the free SKU has its quota limitations, in production we would do capacity planning and according to the expected load we will choose the SKU such that we won't get to a point that the app is stopped due to lack of quota and has sufficent amount of connections.
 
 1.Security
 
