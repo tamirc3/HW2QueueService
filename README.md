@@ -29,6 +29,19 @@ in our implemntaiton we crated the following nodes:
 2.network connection limitations
 since we are using free sku we are limited 250 connections per instance,which means that more then that we will get connection failures to the servers
 
+3.since we are using the free SKU we have a 
+we got quota encforment
+https://docs.microsoft.com/en-us/azure/app-service/web-sites-monitor
+
+and after a few minutes of usage we can get to CPU quota limit aget get:
+
+![image](https://user-images.githubusercontent.com/25264394/172049393-a5714d4e-807f-4488-8764-1f34b85cedec.png)
+
+we can see it in the app service dashboard:
+
+![image](https://user-images.githubusercontent.com/25264394/172049358-de6a3b31-ad5f-4ad6-ae1f-3472cc53167f.png)
+
+
 https://www.freekpaans.nl/2015/08/starving-outgoing-connections-on-windows-azure-web-sites/
 
 ## If the system was made for production:
